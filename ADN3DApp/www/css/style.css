@@ -1,1 +1,17 @@
 /* Empty. Add your own CSS if you like */
+.asd {
+	text-align: center;
+	color: red;
+	font-size: 50px;
+	font-family: algaerian;
+}
+.one {
+	 text-align: center;
+}
+.fond {
+	background-color: #ccd9ff; 
+	opacity: 0.4;
+}
+ion-view {
+	background-image: url(http://www.hdfondos.eu/preview/get_photo/772654/1920/1080);
+}
