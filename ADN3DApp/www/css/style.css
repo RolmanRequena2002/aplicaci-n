@@ -325,3 +325,52 @@ ion-view {
     transform: scale(1) translateX(0px);
   }
 }
+.nutrifacts-html {
+  padding: 2px;
+  font-family:"Helvetica";
+  font-size: 12px;
+  float:center;
+  border: 2px solid black;
+  width:250px;
+  margin-top:2px;
+  background-color: white;
+  display:block;
+  margin-left: auto;
+  margin-right: auto;
+  }
+.nutrifacts-html table{
+  border-collapse: collapse;
+  width: 100%
+}
+.nutrifacts-html td {
+  border-top: 1px solid black;
+}
+.nutrifacts-html h2 {
+  margin:0;
+  font-size:29px; 
+}
+.separator {
+  height:7px;
+  background-color:black;
+  margin-top:2px;
+}
+.alineartexto {
+  text-align:right;
+}
+.alinearcantidad {
+  text-align:right;
+}
+.img {
+  text-align: center;
+  position: center;
+  display: block;
+  margin: auto;
+}
+.text{
+  color: black;
+  text-align: center;
+  font-family:Bauhaus 93;
+  font-size: 18px;
+  background-color: white;
+  opacity: 0.8;
+}
