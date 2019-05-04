@@ -374,136 +374,183 @@ ion-view {
   background-color: white;
   opacity: 0.8;
 }
-* {
-  margin: 0;
-  padding: 0;
-  -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
-  box-sizing: border-box;
-}
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
 
-body {
-  background: #FF9090;
-}
-
-.todo {
-  max-width: 900px;
-  width: 100%;
-  margin: 0 auto;
-  margin-top: 10px;
-  position: relative;
-} 
-
-.titulo {
-   font-size: 80px;
-   font-family: Lucida Console, Courier, monospace;
-   color: rgb(217, 103, 29);
   
 }
 
-img {
-  max-width: 80%;
-  height: auto;
-  margin-top: 20px;
+h1 {
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 400;
+  color:darkorchid;
+  text-decoration: underline wavy;  
+  
 }
-.memoria{
 
-  margin: 50px auto;
+/*
+ * Styles for the deck of cards
+ */
 
+.deck {
+    width: 300px;
+    min-height: 200px;
+    background: linear-gradient(160deg, green 0%, beige 100%);
+    padding: 32px;
+    border-radius: 10px;
+    box-shadow: 12px 15px 20px 0 rgba(46, 61, 73, 0.5);
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0 0 3em;
+    border: dotted; border-color: darkorchid;
+}
+
+.deck .card {
+    height: 50px;
+    width: 50px;
+    background: #E9E638;
+    font-size: 0;
+    color: red;
+    border-radius: 8px;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 5px 2px 20px 0 rgba(46, 61, 73, 0.5);
+}
+
+.deck .card.open {
+    transform: rotateY(0);
+    background: #2ECBEA;
+    cursor: default;
+}
+
+.deck .card.show {
+    font-size: 20px;
+  
+}
+
+.button:hover{
+  color:blue;
+  background-color: yellow;
+
+}
+
+.deck .card.match {
+    cursor: default;
+    background: blue;
+    font-size: 33px;
+}
+
+.deck .card.inactive{
+    pointer-events: none;
+    background: #38E6E9;
+  
+}
+
+/*
+ * Styles for the Score Panel
+ */
+
+.score-panel {
+    text-align: left;
+    width: 345px;
+    margin-bottom: 10px;
+  }
+
+
+.score-panel .stars {
+    margin: 0;
+    padding: 0;
+    display: inline-block;
+    margin: 0 5px 0 0;
+    color: red;
+
+}
+
+.score-panel .stars li {
+    list-style: none;
+    display: inline-block;
+}
+
+.score-panel .restart { 
+    float: right;
+    cursor: pointer;
+    color:blue;
+  
+}
+
+# hour,minute,seconds{
+  font-size: 25px;
+  font-family: 'Open Sans', sans-serif;
+  color:blue;
+  background-color: blue;
+  margin: 20% auto;
+  padding-left: 15px;
+  font-weight: bold;
+  float:right;
+  border color:red;
+  
+}
+/*
+div.time{
+  width: 100px;
+  color:aqua;
+  font-size: 50px;
+  padding: .5em 5em;
+  margin: 15px;
   border-radius: 10px;
-  position: relative;
-  background: #FFFA62;
+}*/
+/*
+#time{
+  font-size: 60px;
+  font-family: 'Open Sans', sans-serif;
+  color:blue;
+  background-color: yellow;
+  margin:auto;
+  padding-left: 15px;
 }
 
-.memoria:after  {
-  content: "";
-  display: block;
-  clear: both;
-}
- 
-.carta {
-  width: 14%;
-  margin: 1% 1%;
-  height: 150px;
-  border-radius: 8px;
-  float: left;
-  cursor: pointer;
-  
-  
+/*Styles for Modal as obtained from W3Schools.org*/
+/* The Modal (background) */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
 }
 
-.inner-wrap {
-  width: 100%;
-  height: 100%;
-  transition: all 0.6s;.
-  -webkit-transition: all 0.6s;
-  transform-style: preserve-3d;
-  position: relative;
+/* Modal Content/Box */
+.modal-content {
+    background-color: #fefefe;
+    margin: 15% auto; /* 15% from the top and centered */
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%; /* Could be more or less, depending on screen size */
 }
 
-
-.frente {
-  background: #FFCF7F top center;
-  width: 100%;
-  height: 100%;
-  border-radius: 8px;
-  z-index: 2;
-  transform: rotateY(0deg);
-  -webkit-transform: rotateY(0deg);
-  -moz-transform: rotateY(0deg);
-  -o-transform: rotateY(0deg);
-  transition: background 0.5s;
+/* The Close Button */
+.close {
+    color: red;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
 }
 
-.flipped {
-  transform: rotateY(180deg);
-  -webkit-transform: rotateY(180deg);
-  -moz-transform: rotateY(180deg);
-  -o-transform: rotateY(180deg);
-
-}
-
-.frente, .atras {
-  backface-visibility: hidden;
-  -webkit-backface-visibility: hidden;
-  position: absolute;
-  top: 0;
-  left: 0;
-}
-
-.atras {
-  transform: rotateY(180deg);
-  -webkit-transform: rotateY(180deg);
-  -moz-transform: rotateY(180deg);
-  -o-transform: rotateY(180deg);
-  text-align: center;
-  box-shadow: 0 6px 16px rgba(0,0,0,0.30);
-  
-}
-
-.contador p {
-    font-size: 30px;
-    font-family: Lucida Console, Courier, monospace;
-    color: rgb(217, 103, 29);
-}
-
-.contador {
-    position: absolute;
-    right: -185px;
-    top: 58px;
-}
-p.counter {
-    text-align: center;
-    font-family: Lucida Console, Courier, monospace;
-}
-
-
-.todo > p {
-    text-align: center;
-    margin-bottom: 20px;
-}
-
-.frente:hover {
-  background: #E8A868;
-  cursor: pointer;
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
 }

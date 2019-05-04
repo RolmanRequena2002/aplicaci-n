@@ -3,26 +3,89 @@ angular.module('starter.controllers', [])
 .controller('InicioCtrl', function($scope) {})
 
 .controller('DashCtrl', function($scope) {
-  var symbols = ['bicycle', 'bicycle', 'leaf', 'leaf', 'cube', 'cube', 'anchor', 'anchor', 'paper-plane-o', 'paper-plane-o', 'bolt', 'bolt', 'bomb', 'bomb', 'diamond', 'diamond'],
-    opened = [],
-    match = 0,
-    moves = 0,
-    $deck = $('.deck'),
-    $scorePanel = $('#score-panel'),
-    $moveNum = $scorePanel.find('.moves'),
-    $ratingStars = $scorePanel.find('i'),
-    $restart = $scorePanel.find('.restart'),
-    delay = 800,
-    gameCardsQTY = symbols.length / 2,
-    rank3stars = gameCardsQTY + 2,
-    rank2stars = gameCardsQTY + 6,
-    rank1stars = gameCardsQTY + 10;
+  const cardArray = [
+  "fa fa-heart",
+  "fa fa-heart",
+  "fa fa-venus-mars",
+  "fa fa-venus-mars",
+  "fa fa-heartbeat",
+  "fa fa-heartbeat",
+  "fa fa-hospital-o",
+  "fa fa-hospital-o",
+  "fa fa-user-md",
+  "fa fa-user-md",
+  "fa fa-ambulance",
+  "fa fa-ambulance",
+  "fa fa-mars-stroke",
+  "fa fa-mars-stroke",
+  "fa fa-venus",
+  "fa fa-venus"
+];
 
-// Shuffle function From http://stackoverflow.com/a/2450976
+/*select parent to append children thereof*/
+const cardContainer = document.querySelector(".deck");
+
+let openedCards = [];
+let sameCards = [];
+let moves = 0;
+let shuffledCards = [];
+const stars = document.querySelector(".stars");
+let countStars = 3;
+let lastmoves = document.querySelector(".moves");
+let lastcountStars = document.querySelector(".countStars");
+let lastallSeconds = document.querySelector(".allSeconds");
+
+// MODAL
+// Get the modal
+var scoreModal = document.getElementById("score-modal");
+
+// get play again button
+var playAgainBtn = document.getElementById("play-again-btn");
+playAgainBtn.onclick = function() {
+  // simple trick to reset your game
+  // this will not work in codepen but try it on your PC
+  location.reload();
+};
+
+function showScoreModal() {
+  scoreModal.style.display = "block";
+}
+
+/*Insert Timer into Game*/
+var timerVar = setInterval(clockTimer, 1000);
+var allSeconds = 0;
+
+function clockTimer() {
+  ++allSeconds;
+  var hour = Math.floor(allSeconds / 3600);
+  var minute = Math.floor((allSeconds - hour * 3600) / 60);
+  var seconds = allSeconds - (hour * 3600 + minute * 60);
+
+  document.getElementById(`hour`).innerHTML = hour;
+  document.getElementById(`minute`).innerHTML = minute;
+  document.getElementById(`seconds`).innerHTML = seconds;
+}
+
+function clockStart() {
+  timerVar = setInterval(countTimer, 1000);
+}
+
+function tpause() {
+  clearInterval(timerVar);
+}
+
+function sreset() {
+  allSeconds = -1;
+  clockTimer();
+}
+
+// Shuffle function from http://stackoverflow.com/a/2450976
 function shuffle(array) {
-  var currentIndex = array.length, temporaryValue, randomIndex;
-  
-  while (0 !== currentIndex) {
+  var currentIndex = array.length,
+    temporaryValue,
+    randomIndex;
+
+  while (currentIndex !== 0) {
     randomIndex = Math.floor(Math.random() * currentIndex);
     currentIndex -= 1;
     temporaryValue = array[currentIndex];
@@ -33,114 +96,151 @@ function shuffle(array) {
   return array;
 }
 
-// Initial Game
-function initGame() {
-  var cards = shuffle(symbols);
-  $deck.empty();
-  match = 0;
-  moves = 0;
-  $moveNum.html(moves);
-  $ratingStars.removeClass('fa-star-o').addClass('fa-star');
-  for (var i = 0; i < cards.length; i++) {
-    $deck.append($('<li class="card"><i class="fa fa-' + cards[i] + '"></i></li>'))
+/*Start the Game Initalization*/
+/*create the deck of cards and put cards in deck*/
+function init(){
+const shuffeledCards = shuffle(cardArray);
+for(let i=0; i < cardArray.length; i++) {
+
+  const card = document.createElement("li");
+    card.classList.add("card");
+    card.innerHTML = `<i class="${cardArray[i]}"></i>`;
+    cardContainer.appendChild(card);
+
+    /*Include click event On Cards*/
+
+    click(card);
   }
-};
-
-// Set Rating and final Score
-function setRating(moves) {
-  var rating = 3;
-  if (moves > rank3stars && moves < rank2stars) {
-    $ratingStars.eq(2).removeClass('fa-star').addClass('fa-star-o');
-    rating = 2;
-  } else if (moves > rank2stars && moves < rank1stars) {
-    $ratingStars.eq(1).removeClass('fa-star').addClass('fa-star-o');
-    rating = 1;
-  } else if (moves > rank1stars) {
-    $ratingStars.eq(0).removeClass('fa-star').addClass('fa-star-o');
-    rating = 0;
-  } 
-  return { score: rating };
-};
-
-// End Game
-function endGame(moves, score) {
-  swal({
-    allowEscapeKey: false,
-    allowOutsideClick: false,
-    title: 'Congratulations! You Won!',
-    text: 'With ' + moves + ' Moves and ' + score + ' Stars.\nBoom Shaka Lak!',
-    type: 'success',
-    confirmButtonColor: '#9BCB3C',
-    confirmButtonText: 'Play again!'
-  }).then(function(isConfirm) {
-    if (isConfirm) {
-      initGame();
-    }
-  })
 }
 
-// Restart Game
-$restart.on('click', function() {
-  swal({
-    allowEscapeKey: false,
-    allowOutsideClick: false,
-    title: 'Are you sure?',
-    text: "Your progress will be Lost!",
-    type: 'warning',
-    showCancelButton: true,
-    confirmButtonColor: '#9BCB3C',
-    cancelButtonColor: '#EE0E51',
-    confirmButtonText: 'Yes, Restart Game!'
-  }).then(function(isConfirm) {
-    if (isConfirm) {
-      initGame();
-    }
-  })
-});
+function click(card) {
+  /*Clicking On Cards*/
+  card.addEventListener("click", function() {
+    const nowCard = this;
+    const lastCard = openedCards[0];
 
-// Card flip
-$deck.on('click', '.card:not(".match, .open")', function() {
-  if($('.show').length > 1) { return true; }
-  
-  var $this = $(this),
-      card = $this.context.innerHTML;
-  $this.addClass('open show');
-  opened.push(card);
+    /*The Card I'm On is Opened*/
 
-  // Compare with opened card
-  if (opened.length > 1) {
-    if (card === opened[0]) {
-      $deck.find('.open').addClass('match animated infinite rubberBand');
-      setTimeout(function() {
-        $deck.find('.match').removeClass('open show animated infinite rubberBand');
-      }, delay);
-      match++;
+    if (openedCards.length === 1) {
+      card.classList.add("open", "show","inactive" );
+      openedCards.push(this);//adds a card to the array
+
+      /*This Is Where The Two Cards Are Compared*/
+
+      compare(nowCard, lastCard);
     } else {
-      $deck.find('.open').addClass('notmatch animated infinite wobble');
-      setTimeout(function() {
-        $deck.find('.open').removeClass('animated infinite wobble');
-      }, delay / 1.5);
-      setTimeout(function() {
-        $deck.find('.open').removeClass('open show notmatch animated infinite wobble');
-      }, delay);
+      /*There Are No Opened Cards*/
+      nowCard.classList.add("open", "show", "inactive");
+      openedCards.push(this);//adds a card to the array
     }
-    opened = [];
-    moves++;
-    setRating(moves);
-    $moveNum.html(moves);
-  }
-  
-  // End Game if match all cards
-  if (gameCardsQTY === match) {
-    setRating(moves);
-    var score = setRating(moves).score;
+  });
+}
+
+function compare(nowCard, lastCard) {
+  if (nowCard.innerHTML === lastCard.innerHTML) {
+    /*Matching Cards*/
+    nowCard.classList.add("match");
+    lastCard.classList.add("match");
+
+    sameCards.push(nowCard, lastCard);
+
+    openedCards = [];
+
+    /*Is the game over?*/
+
+    itOver();
+  } else {
+    /*Wait Time: 550 milliseconds*/
     setTimeout(function() {
-      endGame(moves, score);
-    }, 500);
+      nowCard.classList.remove("open", "show", "inactive");
+      lastCard.classList.remove("open", "show", "inactive");
+    openedCards = [];
+    
+    }, 550);
+    
+    
+    /*add new moves*/
+    addMove();
   }
+}
+
+/*Game Over Alert-Game Won! Only if all 16 cards match*/
+function itOver() {
+  if (sameCards.length === cardArray.length) {
+    /*alert("Congratulations! Do You Want to Play Again? Your Stars are " +  countStars  +  ". Your moves are "   +  moves  + 
+       ". Your timing in seconds is "    +  allSeconds );*/
+   
+   //Assistance received from my Udacity mentor, Peter. He helped me with getting the modal installed correctly.
+
+    // insert all html you need into the modal div with class "modal-score-content"
+    
+    // I have set class of modal-moves in index.html check it out
+    // you need make sure that you passing correct values to actually see any difference
+    document.querySelector('.modal-moves').innerHTML = moves;
+    document.querySelector('.countStars').innerHTML = countStars;
+    document.querySelector('.allSeconds').innerHTML= allSeconds;
+ 
+    allSeconds.innerHTML = allSeconds;
+
+    // then show modal
+    showScoreModal();
+    clearInterval(timerVar);
+  }
+}
+
+/*Make a Move*/
+
+const movesContainer = document.querySelector(".moves");
+
+function addMove() {
+  moves++;
+  movesContainer.innerHTML = moves;
+
+  /*Call Rating Function Here*/
+  rating();
+}
+
+/*Rating*/
+const starsContainer = document.querySelector(".stars");
+starsContainer.innerHTML = `<li><i class="fa fa-star"></i></li><li><i class="fa fa-star"></i></li>
+                        <li><i class="fa fa-star"></i></li>`;
+function rating() {
+  if (moves > 15) {
+    countStars = 1;
+    starsContainer.innerHTML = `<li><i class="fa fa-star"></i></li>`;
+  } else if (moves > 10) {
+    countStars = 2;
+    starsContainer.innerHTML = `<li><i class="fa fa-star"></i></li><li><i class="fa fa-star"></i></li>`;
+  } else {
+    countStars = 3;
+    starsContainer.innerHTML = `<li><i class="fa fa-star"></i></li><li><i class="fa fa-star"></i></li>
+                                <li><i class="fa fa-star"></i></li>`;
+  }
+}
+
+/*Program Restart Button*/
+
+const restartBtn = document.querySelector(".restart");
+restartBtn.addEventListener("click", function() {
+  /*Eliminate the cards*/
+
+  cardContainer.innerHTML = "";
+
+  /*Make new cards*/
+  init();
+
+  /*Reset associated elements*/
+  sameCards = [];
+  moves = 0;
+  movesContainer.innerHTML = moves;
+  starsContainer.innerHTML = `<li><i class="fa fa-star"></i></li><li><i class="fa fa-star"></i></li>
+                            <li><i class="fa fa-star"></i></li>`;
 });
 
-initGame();
+/*Begin The First Game!*/
+
+init();
+
 })
 
 .controller('ChatsCtrl', function($scope, Chats) {
