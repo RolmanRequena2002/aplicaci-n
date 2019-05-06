@@ -2,7 +2,9 @@ angular.module('starter.controllers', [])
 
 .controller('InicioCtrl', function($scope) {})
 
-.controller('DashCtrl', function($scope) {
+.controller('DashCtrl', function($scope) {})
+
+.controller('JuegoCtrl', function($scope) {
   const cardArray = [
   "fa fa-heart",
   "fa fa-heart",

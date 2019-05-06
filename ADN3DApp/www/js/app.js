@@ -63,6 +63,16 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
     }
   })
 
+  .state('tab.juego', {
+    url: '/juego',
+    views: {
+      'tab-juego': {
+        templateUrl: 'templates/tab-juego.html',
+        controller: 'JuegoCtrl'
+      }
+    }
+  })
+
   .state('tab.chats', {
       url: '/chats',
       views: {

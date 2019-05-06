@@ -1,16 +1,24 @@
-<ion-view view-title="MENSAJES">
+<ion-view view-title="INFOGRAFÍAS">
   <ion-content>
-    <ion-list>
-      <ion-item class="item-remove-animate item-avatar item-icon-right" ng-repeat="chat in chats" type="item-text-wrap" href="#/tab/chats/{{chat.id}}">
-        <img ng-src="{{chat.face}}">
-        <h2>{{chat.name}}</h2>
-        <p>{{chat.lastText}}</p>
-        <i class="icon ion-chevron-right icon-accessory"></i>
-
-        <ion-option-button class="button-assertive" ng-click="remove(chat)">
-          Delete
-        </ion-option-button>
-      </ion-item>
-    </ion-list>
+    <!--tex infografias-->
+    <div class="container">
+      <div class="row">
+        <div class="col">
+          <h2 class="asd">INFOGRAFÍAS</h1>
+        </div>
+      </div>
+    </div>
+    <div class="container">
+      <div class="row">
+        <div class="col">
+          <img class="img" height="270" width="270" src="img/info1.jpg">
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <img class="img" height="350" width="250" src="img/info2.png">
+        </div>
+      </div>
+    </div>
   </ion-content>
 </ion-view>
