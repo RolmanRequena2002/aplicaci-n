@@ -15,6 +15,9 @@
 	opacity: 0.4;
 }
 ion-view {
+  background-attachment: fixed;
+  background-size: cover;
+  background-repeat: no-repeat;
 	background-image: url(http://www.hdfondos.eu/preview/get_photo/772654/1920/1080);
 }
 .dna {
