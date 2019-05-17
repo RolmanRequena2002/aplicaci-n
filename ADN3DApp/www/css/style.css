@@ -4,7 +4,7 @@
 	color: red;
 	font-size: 50px;
 	font-family: algaerian;
-	background-color: #ccd9ff; 
+	background-color: silver; 
 	opacity: 0.4;
 }
 .one {
@@ -370,11 +370,11 @@ ion-view {
   margin: auto;
 }
 .text{
-  color: black;
+  color: white;
   text-align: center;
   font-family:Bauhaus 93;
   font-size: 18px;
-  background-color: white;
+  background-color: black;
   opacity: 0.8;
 }
 .container {
