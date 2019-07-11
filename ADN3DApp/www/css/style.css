@@ -2,13 +2,22 @@
 .asd {
 	text-align: center;
 	color: red;
-	font-size: 50px;
+	font-size: 30px;
 	font-family: algaerian;
 	background-color: silver; 
 	opacity: 0.4;
 }
+.txx{
+  color:white;
+  text-align: center;
+}
 .one {
-	 text-align: center;
+   text-align: center;
+}
+.ones {
+   text-align: center;
+   height: 300px;
+   width: 600px;
 }
 .fond {
 	background-color: #ccd9ff; 
@@ -373,7 +382,7 @@ ion-view {
   color: white;
   text-align: center;
   font-family:Bauhaus 93;
-  font-size: 18px;
+  font-size: 15px;
   background-color: black;
   opacity: 0.8;
 }
